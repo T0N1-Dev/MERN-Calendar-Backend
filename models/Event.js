@@ -6,7 +6,7 @@ const eventSchema = new Schema({
         required: true,
         unique: true
     },
-    notes: {
+    description: {
         type: String,
     },
     start: {
@@ -16,6 +16,22 @@ const eventSchema = new Schema({
     end: {
         type: Date,
         required: true
+    },
+    allDay: {
+        type: Boolean,
+        required: true
+    },
+    bufferBefore: {
+        type: Number
+    },
+    status: {
+        type: String
+    },
+    color: {
+        type: String
+    },
+    tooltip: {
+        type: String,
     },
     user: {
         type: Schema.Types.ObjectId,

@@ -13,6 +13,10 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    color: {
+        type: String,
+        default: '#09f'
     }
 });
 

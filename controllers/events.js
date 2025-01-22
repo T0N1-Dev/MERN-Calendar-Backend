@@ -52,27 +52,33 @@ const updateEvent = async( req, res = response ) => {
     
     const eventId = req.params.id;
     const uid = req.uid;
+    const { title, ...rest } = req.body;
 
     try {
-
+        const existsEvent = await Event.findOne({title});
         const event = await Event.findById( eventId );
 
+        // Some Validations to consider before updating
         if ( !event ) {
             return res.status(404).json({
                 ok: false,
                 msg: 'There is no event with that id.'
             });
-        }
-
-        if ( event.user.toString() !== uid ) {
+        } else if ( event.user.toString() !== uid ) {
             return res.status(401).json({
                 ok: false,
                 msg: 'Permission error'
             });
+        } else if ( existsEvent && existsEvent.id !== eventId ) {
+            return res.status(400).json({
+                ok: false,
+                msg: `An event with the title "${title}" already exists.`
+            });
         }
 
         const newEvent = {
-            ...req.body,
+            title,
+            ...rest,
             user: uid
         }
 
@@ -113,7 +119,7 @@ const deleteEvent = async( req, res = response ) => {
         if ( event.user.toString() !== uid ) {
             return res.status(401).json({
                 ok: false,
-                msg: 'Error! Please contact administartion.'
+                msg: 'Error! Permission error.'
             });
         }
         

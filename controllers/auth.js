@@ -2,6 +2,7 @@ const { response } = require('express');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const { generateJWT } = require('../helpers/jwt');
+const { randomElement } = require('../helpers/generateRandomColor');
  
 const createUser = async(req, res = response ) => {
 
@@ -18,6 +19,8 @@ const createUser = async(req, res = response ) => {
         }
 
         user = new User( req.body );
+
+        user.color = randomElement();
     
         // Encript password
         const salt = bcrypt.genSaltSync();
@@ -33,6 +36,7 @@ const createUser = async(req, res = response ) => {
             ok: true,
             uid: user.id,
             name: user.username,
+            color: user.color,
             token
         })
         
@@ -77,6 +81,7 @@ const loginUser = async(req, res = response ) => {
             ok: true,
             uid: user.id,
             name: user.username,
+            color: user.color,
             token
         })
 
@@ -93,7 +98,7 @@ const loginUser = async(req, res = response ) => {
 
 const renewToken = async (req, res = response ) => {
 
-    const { uid, username } = req;
+    const { uid, username, color } = req;
 
     // Generar JWT
     const token = await generateJWT( uid, username );
@@ -102,7 +107,8 @@ const renewToken = async (req, res = response ) => {
         ok: true,
         token,
         name: username,
-        uid: uid
+        uid,
+        color
     })
 }
 
