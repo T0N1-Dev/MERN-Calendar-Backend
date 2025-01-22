@@ -10,7 +10,12 @@ const app = express();
 dbConection();
 
 // CORS
-app.use(cors());
+app.use(cors({
+    origin: 'https://t0n1-dev.github.io', // Dominio de tu frontend en GitHub Pages
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true, // Permitir el uso de cookies o cabeceras como 'x-token'
+    }
+));
 
 // Public Directory
 app.use( express.static('public') );
