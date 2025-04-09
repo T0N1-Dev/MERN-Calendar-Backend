@@ -6,32 +6,20 @@ const eventSchema = new Schema({
         required: true,
         unique: true
     },
-    description: {
-        type: String,
-    },
     start: {
         type: Date,
-        required: true
+        required: false
     },
     end: {
         type: Date,
-        required: true
+        required: false
     },
     allDay: {
         type: Boolean,
         required: true
     },
-    bufferBefore: {
-        type: Number
-    },
-    status: {
+    backgroundColor: {
         type: String
-    },
-    color: {
-        type: String
-    },
-    tooltip: {
-        type: String,
     },
     user: {
         type: Schema.Types.ObjectId,

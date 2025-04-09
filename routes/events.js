@@ -18,10 +18,8 @@ router.get('/', getEvents);
 
 // Create a new event
 router.post('/', 
-    [
+    [      
         check('title', 'Title is required').not().isEmpty(),
-        check('start', 'Start date is required').custom( isDate ),
-        check('end', 'End date is required').custom( isDate ),
         validateFields
     ],
     createEvent
@@ -32,7 +30,6 @@ router.put('/:id',
     [
         check('title', 'Title is required').not().isEmpty(),
         check('start', 'Start date is required').custom( isDate ),
-        check('end', 'End date is required').custom( isDate ),
         validateFields
     ],
     updateEvent
